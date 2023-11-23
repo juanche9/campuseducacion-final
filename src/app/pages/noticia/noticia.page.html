@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-toolbar>
+      <ion-title>{{ noticia.Title }}</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-fab top right edge #fab>
+      <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+      <ion-fab-list>
+          <button ion-fab *ngIf="canShareFacebook" (click)="shareFacebook()"><ion-icon name="logo-facebook"></ion-icon></button>
+          <button ion-fab *ngIf="canShareTwitter" (click)="shareTwitter()"><ion-icon name="logo-twitter"></ion-icon></button>
+          <button ion-fab *ngIf="canShareWhatsApp" (click)="shareWhatsApp()"><ion-icon name="logo-whatsapp"></ion-icon></button>
+          <button ion-fab (click)="share()"><ion-icon name="md-share"></ion-icon></button>
+      </ion-fab-list>
+  </ion-fab>
+  <h1 class="titulo" ion-text color="primary">{{ noticia.Title }}</h1>
+  <p [innerHTML]="noticia.Content"></p>
+
+</ion-content>
