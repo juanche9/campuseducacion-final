@@ -1,6 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FCM } from '@awesome-cordova-plugins/fcm/ngx';
 import { Noticia } from 'src/app/model/noticia.model';
 import { Storage } from '@ionic/storage';
 import { map, first } from 'rxjs/operators';
@@ -14,7 +13,6 @@ export class NoticiasProvider {
   favoritas: Number[] = [];
   constructor(
     public http: HttpClient,
-    public fcm: FCM,
     public storage: Storage) {
     }
     getNoticiasCategoriaSearch(categoria: string | number | boolean, criteria: string | number | boolean) {

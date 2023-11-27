@@ -4,7 +4,7 @@ import { ToastController } from '@ionic/angular';
 import { NoticiasProvider } from 'src/app/providers/noticias/noticias.service';
 import { Subscription } from "rxjs";
 import { Noticia } from 'src/app/model/noticia.model';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-noticia',
@@ -23,7 +23,6 @@ export class NoticiaPage implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private noticiasService: NoticiasProvider,
-    private socialSharing: SocialSharing,
     public toastCtrl: ToastController
   ) {
     this.noticia = new Noticia(0,'','','','','','',[],'');
@@ -43,38 +42,14 @@ export class NoticiaPage implements OnInit, OnDestroy {
     }
   }
 
-  checkSharingOptions() {
-    this.socialSharing.canShareVia('facebook').then(() => {
-      this.canShareFacebook = true;
-    }).catch(() => {
-      this.canShareFacebook = false;
+
+  async share() {
+    await Share.share({
+      title: this.noticia.Title,
+      text: this.noticia.Extracto,
+      url: this.noticia.GUID,
+      dialogTitle: 'Compartir Noticia',
     });
-    this.socialSharing.canShareVia('whatsapp').then(() => {
-      this.canShareWhatsApp = true;
-    }).catch(() => {
-      this.canShareWhatsApp = false;
-    });
-    this.socialSharing.canShareVia('twitter').then(() => {
-      this.canShareTwitter = true;
-    }).catch(() => {
-      this.canShareTwitter = false;
-    });
-  }
-
-  shareFacebook() {
-    this.socialSharing.shareViaFacebook(this.noticia.Title, this.noticia.Imagen, this.noticia.GUID);
-  }
-
-  shareTwitter() {
-    this.socialSharing.shareViaTwitter(this.noticia.Title, this.noticia.Imagen, this.noticia.GUID);
-  }
-
-  shareWhatsApp() {
-    this.socialSharing.shareViaWhatsApp(this.noticia.Title, this.noticia.Imagen, this.noticia.GUID);
-  }
-
-  share() {
-    this.socialSharing.share(this.noticia.Title, this.noticia.Extracto, this.noticia.Imagen, this.noticia.GUID);
   }
 
   ngOnDestroy() {
